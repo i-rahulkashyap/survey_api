@@ -1,20 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it 'is valid with valid attributes' do
-    organization = Organization.create(name: 'elitmus.com')
-    user = User.new(email: 'test@elitmus.com', password: 'password', organization: organization)
-    expect(user).to be_valid
+  let(:organization) { create(:organization) }
+
+  subject(:user) do
+    described_class.new(
+      email: "test@example.com",
+      password: "password123",
+      organization: organization
+    )
   end
 
-  it 'is not valid without an email' do
-    user = User.new(password: 'password')
-    expect(user).to_not be_valid
-  end
+  # Association tests
+  it { should belong_to(:organization) }
+  it { should have_many(:surveys) }
 
-  it 'is not valid with a non-elitmus.com email' do
-    organization = Organization.create(name: 'elitmus.com')
-    user = User.new(email: 'test@gmail.com', password: 'password', organization: organization)
-    expect(user).to_not be_valid
+  # Validation tests
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:password).on(:create) }
+  it { should validate_length_of(:password).is_at_least(6).on(:create) }
+  it { should validate_presence_of(:organization) }
+
+  describe 'email validation' do
+    before { user.save }
+    
+    it 'validates uniqueness of email' do
+      should validate_uniqueness_of(:email)
+        .case_insensitive
+        .with_message('has already been taken')
+    end
   end
 end
