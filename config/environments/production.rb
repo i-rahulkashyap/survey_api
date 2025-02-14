@@ -36,8 +36,8 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  config.action_mailer.default_url_options = { host: 'client-i-rahulkashyap-rahuls-projects-246becab.vercel.app' }
-  Rails.application.routes.default_url_options[:host] = 'https://client-i-rahulkashyap-rahuls-projects-246becab.vercel.app'
+  config.action_mailer.default_url_options = { host: 'survey-frontend-alpha.vercel.app' }
+  Rails.application.routes.default_url_options[:host] = 'https://https://survey-frontend-alpha.vercel.app'
 
 
 
