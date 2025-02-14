@@ -17,11 +17,11 @@ class SessionsController < ApplicationController
 
     token = JsonWebToken.encode({ user_id: user.id })
 
-    redirect_to "http://localhost:4000/?token=#{token}"
+    redirect_to "https://survey-frontend-alpha.vercel.app/?token=#{token}"
     # For an API, return the token (and optionally user info) as JSON.
     # render json: { message: "Login successful", token: token, user: user }
 
-
+    
     # if user.persisted?
     #   token = JsonWebToken.encode({ user_id: user.id })
     #   redirect_to "http://localhost:4000/?token=#{token}"
