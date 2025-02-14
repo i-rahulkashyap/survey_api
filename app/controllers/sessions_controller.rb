@@ -4,32 +4,31 @@ class SessionsController < ApplicationController
 
   skip_before_action :authenticate_request, only: [:google_auth]
 
-  def google_auth
-   
+    def google_auth
     auth = request.env['omniauth.auth']
+
+    # Find or create the organization
+    organization = Organization.find_by(name: 'elitmus.com') || Organization.find_by(name: 'gmail.com') || Organization.find_by(name: 'Default')
+
+    if organization.nil?
+      redirect_to '"https://survey-frontend-alpha.vercel.app/login', alert: 'Organization not found'
+      return
+    end
 
     # Find or create the user based on their email
     user = User.find_or_create_by(email: auth.info.email) do |u|
-      u.name  = auth.info.email
-      # u.image = auth.info.image
+      u.name = auth.info.email
+      u.password = SecureRandom.hex(10) # Generate a random password
+      u.organization = organization
     end
 
-
-    token = JsonWebToken.encode({ user_id: user.id })
-
-    redirect_to "https://survey-frontend-alpha.vercel.app/?token=#{token}"
-    # For an API, return the token (and optionally user info) as JSON.
-    # render json: { message: "Login successful", token: token, user: user }
-
-    
-    # if user.persisted?
-    #   token = JsonWebToken.encode({ user_id: user.id })
-    #   redirect_to "http://localhost:4000/?token=#{token}"
-    # else
-    #   Rails.logger.error "User creation failed: #{user.errors.full_messages.join(', ')}"
-    #   redirect_to 'http://localhost:4000/login', alert: 'Authentication failed'
-    # end
-
+    if user.persisted?
+      token = JsonWebToken.encode({ user_id: user.id })
+      redirect_to "https://survey-frontend-alpha.vercel.app/?token=#{token}"
+    else
+      Rails.logger.error "User creation failed: #{user.errors.full_messages.join(', ')}"
+      redirect_to '"https://survey-frontend-alpha.vercel.app', alert: 'Authentication failed'
+    end
   end
 
   def logout
