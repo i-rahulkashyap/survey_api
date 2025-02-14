@@ -28,10 +28,15 @@ gem 'pundit'
 gem 'multi_xml', '~> 0.6.0' 
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
+gem 'jwt'
+
+gem 'dotenv-rails', groups: [:development, :test]
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'bcrypt', '~> 3.1' 
 gem 'rack-cors'
+gem 'jsonapi-serializer'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
