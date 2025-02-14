@@ -42,7 +42,7 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: 'smtp.gmail.com',
     port: 587,
-    domain: 'example.com',  # Replace with your domain
+    domain: 'client-i-rahulkashyap-rahuls-projects-246becab.vercel.app'
     user_name: 'mailertest.rk@gmail.com',
     password: 'rwiu ucjk purb qvlc',
     authentication: 'plain',
