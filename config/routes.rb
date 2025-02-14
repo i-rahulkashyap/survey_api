@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
 
+  root to: redirect('/auth/google_oauth2')
+
   get '/auth/:provider/callback', to: 'sessions#google_auth'
   get '/auth/failure', to: redirect('/')  # Optional failure route
 
   delete '/logout', to: 'sessions#logout'
 
   get '/profile', to: 'profiles#show'
+
+  
 
   resources :surveys do
     member do
