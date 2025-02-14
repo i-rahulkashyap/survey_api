@@ -37,7 +37,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   config.action_mailer.default_url_options = { host: 'survey-frontend-alpha.vercel.app' }
-  Rails.application.routes.default_url_options[:host] = 'https://https://survey-frontend-alpha.vercel.app'
+  Rails.application.routes.default_url_options[:host] = 'https://survey-frontend-alpha.vercel.app'
 
 
 
